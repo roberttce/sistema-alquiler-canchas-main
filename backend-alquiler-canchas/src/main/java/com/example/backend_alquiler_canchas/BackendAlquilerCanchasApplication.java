@@ -9,6 +9,4 @@ public class BackendAlquilerCanchasApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BackendAlquilerCanchasApplication.class, args);
 	}
-
 }
-

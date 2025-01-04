@@ -13,7 +13,7 @@ public class MariaDbConfig {
         MariaDbPoolDataSource dataSource = null; 
         try {
             dataSource = new MariaDbPoolDataSource();
-            dataSource.setUrl("jdbc:mariadb://localhost:3306/fachas");
+            dataSource.setUrl("jdbc:mariadb://localhost:3306/bd_alquiler_canchas");
             dataSource.setUser("root"); 
             dataSource.setPassword(""); 
             System.out.println("Conexión establecida con éxito.");

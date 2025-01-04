@@ -6,7 +6,6 @@ import com.example.backend_alquiler_canchas.repository.DeporteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,9 +43,6 @@ public class DeporteService {
 
         deporte.setNombreDeporte(deporteDTO.getNombreDeporte());
         deporte.setDescripcion(deporteDTO.getDescripcion());
-        BigDecimal costoPorHora = new BigDecimal(deporteDTO.getCostoPorHora().toString());
-        deporte.setCostoPorHora(costoPorHora);
-
         deporte = deporteRepository.save(deporte);
         return mapearADTO(deporte);
     }
@@ -57,11 +53,10 @@ public class DeporteService {
         deporteRepository.delete(deporte);
     }
 
-    private Deporte mapearADominio(DeporteDTO deporteDTO) {
+    private Deporte mapearADominio(DeporteDTO deporteDTO ) {
         return Deporte.builder()
                 .nombreDeporte(deporteDTO.getNombreDeporte())
                 .descripcion(deporteDTO.getDescripcion())
-                .costoPorHora(new BigDecimal(deporteDTO.getCostoPorHora().toString()))
                 .build();
     }
 
@@ -69,8 +64,7 @@ public class DeporteService {
         return new DeporteDTO(
                 deporte.getIdDeporte(),
                 deporte.getNombreDeporte(),
-                deporte.getDescripcion(),
-                deporte.getCostoPorHora()
+                deporte.getDescripcion()
         );
     }
 }

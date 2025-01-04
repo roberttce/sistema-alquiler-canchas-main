@@ -30,8 +30,4 @@ export class AdmiService {
   isLoggedIn(): boolean {
     return !!localStorage.getItem('authToken');
   }
-
-
-
-  
 }
