@@ -1,0 +1,27 @@
+  <img src="portada_login.jpg" alt="login-background" class="login-background">
+  <div class="conta">
+    <div class="banner">
+        <p>PACCHAS</p>
+    </div>
+    <div class="container">
+        <div class="images">
+            <img src="tenis-abecedario-kgNF--1248x698@abc.webp" alt="Imagen 1">
+            <img src="Voley 2023.jpg" alt="Imagen 2">
+            <img src="image (1).png" alt="Imagen 3">
+        </div>
+        <div class="login-box">
+            <h1>INICIO DE SESIÓN</h1>
+            <form (ngSubmit)="login()">
+                <div>
+                  <label for="usuario">Usuario</label>
+                  <input type="text" id="usuario" [(ngModel)]="usuario" name="usuario" required>
+                </div>
+                <div>
+                  <label for="contrasena">Contraseña</label>
+                  <input type="password" id="contrasena" [(ngModel)]="contrasena" name="contrasena" required>
+                </div>
+                <button type="submit">Login</button>
+              </form>
+        </div>
+    </div>
+  </div>

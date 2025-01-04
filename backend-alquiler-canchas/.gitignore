@@ -1,0 +1,27 @@
+ # Archivos generados por Maven
+target/
+*.log
+*.jar
+*.war
+*.ear
+*.class
+
+# Archivos generados por Gradle
+.gradle/
+build/
+
+# Archivos generados por IDEs
+.idea/
+.vscode/
+
+# Archivos temporales
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
