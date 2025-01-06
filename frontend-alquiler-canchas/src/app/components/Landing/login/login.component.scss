@@ -16,10 +16,10 @@ $primary-color: #0c9253;
 .banner {
     background-color: $primary-color;
     color: rgb(2, 0, 0);
-    padding: 1px; /* Reducir este valor hace que el banner sea más delgado */
+    padding: 5px; /* Reducir este valor hace que el banner sea más delgado */
     text-align: left;
-    font-size: 13px; /* Opcional: Ajustar el tamaño del texto si es necesario */
-    font-weight: bold;
+    font-size: 20px; /* Opcional: Ajustar el tamaño del texto si es necesario */
+    font-weight: Lora;
 }
 
 
@@ -86,3 +86,9 @@ $primary-color: #0c9253;
         margin: 0px 0;
     }
 }
+.custom-font {
+    font-family: 'Lobster', cursive; /* Fuente de Google Fonts */
+    font-size: 6rem; /* Tamaño más grande */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra decorativa */
+  }
+  

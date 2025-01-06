@@ -1,112 +1,133 @@
-$primary-color: #4CAF50;
-$secondary-color: #f5f5f5;
-$text-color: #333;
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: $secondary-color;
-}
-
+/* Container to hold the layout */
 .container {
     display: flex;
+    height: 100vh; /* Full screen height */
 }
 
+/* Sidebar menu - fixed on the left */
 .menu {
     width: 250px;
-    background-color: $primary-color;
+    background-color: #28a745; /* Green background */
     color: white;
+    position: fixed; /* Fixed position */
+    top: 0;
+    left: 0;
+    height: 100%;
     padding: 20px;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-    .menu-header {
-        text-align: center;
-        margin-bottom: 20px;
+.menu-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        h1 {
-            margin: 0;
-            font-size: 24px;
-        }
+.menu-header h1 {
+    font-size: 2rem;
+}
 
-        p {
-            margin: 5px 0;
-        }
+.menu-header input {
+    padding: 8px;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+}
 
-        input {
-            width: 100%;
-            padding: 8px;
-            border: none;
-            border-radius: 4px;
-        }
+.dropdown-menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dropdown-item {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Content area, which will shift when the sidebar is visible */
+.content {
+    margin-left: 250px; /* Space for the fixed sidebar */
+    padding: 20px;
+    width: calc(100% - 250px); /* Ensure content takes up the remaining width */
+    background-color: #f9f9f9;
+    height: 100%;
+    overflow-y: auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.see-all {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.see-all:hover {
+    background-color: #218838;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
     }
 
-    .menu-items {
-        a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 10px 0;
-            transition: background 0.3s;
+    .menu {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
 
-            &:hover {
-                background: darken($primary-color, 10%);
-            }
-        }
+    .content {
+        margin-left: 0;
+        width: 100%;
     }
 }
 
-.content {
-    flex: 1;
-    padding: 20px;
+.day-week {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
 
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+.day, .week {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 48%;
+}
 
-        h2 {
-            margin: 0;
-        }
+.day h3, .week h3 {
+    font-size: 1.2rem;
+    color: #28a745;
+}
 
-        .see-all {
-            background-color: $primary-color;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-
-            &:hover {
-                background: darken($primary-color, 10%);
-            }
-        }
-    }
-
-    .reservations {
-        margin-top: 20px;
-
-        .day-week {
-            display: flex;
-            justify-content: space-between;
-
-            div {
-                background: white;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                text-align: center;
-                flex: 1;
-                margin: 0 10px;
-
-                h3 {
-                    margin: 0;
-                }
-
-                span {
-                    font-size: 24px;
-                    font-weight: bold;
-                }
-            }
-        }
-    }
+.day span, .week span {
+    font-size: 2rem;
+    font-weight: bold;
 }
