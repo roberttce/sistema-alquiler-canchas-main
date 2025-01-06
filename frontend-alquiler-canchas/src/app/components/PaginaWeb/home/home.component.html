@@ -1,11 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="home.component.scss">
+  <title>PhaQchas</title>
 </head>
 <body>
-    <li><a class="dropdown-item" href="../reservausuario">Registrar persona</a></li>
+  <nav class="navbar">
+    <div class="logo">PHAQCHAS</div>
+    <ul class="nav-links">
+        <li><a href="#">Ubicación</a></li>
+        <li><a href="#">Eventos</a></li>
+        <li><a href="#">Sobre nosotros</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a class="reserve-btn" href="../reservausuario">Reserva ya -></a></li>
+    </ul>
+</nav>
+
+<section class="description">
+  <div class="text-content">
+      <h2>El campo deportivo PHAQCHAS le ofrece una variedad de deportes a elección de usted.</h2>
+      <p>Este atento al calendario semanal fíjese aqui </p>
+      <a class="reserve-btn" href="../reservausuario">Reserve</a>
+  </div>
+  <div class="image-container">
+      <img src="facchas.jpeg" alt="Deportes en PHAQCHAS">
+  </div>
+</section>
+
+<section class="deportes">
+  <h3>DEPORTES</h3>
+  <div class="iconos-deportes">
+      <div class="deporte">
+          <img src="voley-portada.jpg" alt="Voleibol">
+          <p>Vóley</p>
+      </div>
+      <div class="deporte">
+          <img src="basquet-portada.jpg" alt="Básquet">
+          <p>Básquet</p>
+      </div>
+      <div class="deporte">
+          <img src="futsal-portada.png" alt="Fútsal">
+          <p>Fútbol</p>
+      </div>
+      <div class="deporte">
+          <img src="tenis-portada.jpeg" alt="Tenis">
+          <p>Tenis</p>
+      </div>
+      <div class="deporte">
+          <img src="billar-portada.jpeg" alt="Billar">
+          <p>Billar</p>
+      </div>
+      </div>
+
+      <p>Ofrecemos también bebidas y snacks.</p>
+
+        <div class="iconos-deportes">
+        <div class="deporte">
+          <img src="bebidas-portada.png" alt="Bebidas">
+        </div>
+        <div class="deporte">
+          <img src="galletas-portada.jpeg" alt="Bebidas">
+        </div>
+      </div>
+</section>
+
+<section class="reservation">
+  <div class="contact-info">
+      <img src="atencion-cliente.png" alt="Contacto" class="contact-image">
+      <h2>Llame ahora</h2>
+      <p>Llame al 983 664 333 y asegure su reserva, el precio variará dependiendo si escoge el horario diurno o nocturno.</p>
+      <p>Consulte los precios.</p>
+  </div>
+  <div class="reservation-info">
+      <img src="reserva.jpeg" alt="Reserva" class="reservation-image">
+      <h2>¿Cómo asegurar su reserva?</h2>
+      <p>Priorice su hora de reserva, dando un adelanto puede hacerlo en el mismo local PHAQCHAS o llamando al siguiente número 983 664 333.</p>
+  </div>
+</section>
+
+<section class="pricing">
+  <h2>Precios</h2>
+  <div class="pricing-details">
+      <div class="courts">
+          <p><strong>Canchas:</strong></p>
+          <ul>
+              <li>Futbol</li>
+              <li>Voley</li>
+              <li>Basquet</li>
+          </ul>
+      </div>
+      <div class="entertainment-tables">
+          <p><strong>Mesas de entretenimiento:</strong></p>
+          <ul>
+              <li>Pinball</li>
+              <li>Billar</li>
+              <li>Fulbito de mesa</li>
+          </ul>
+      </div>
+  </div>
+  <div class="schedule">
+      <p><strong>Horario Diurno:</strong></p>
+      <p>8:00 am - 6:00 pm</p>
+      <p><strong>Costo:</strong> S/15.00</p>
+      <p><strong>Horario Nocturno:</strong></p>
+      <p>6:00 pm - 10:00 pm</p>
+      <p><strong>Costo:</strong> S/20.00</p>
+  </div>
+</section>
+
+<section class="metodo-pago">
+  <h2>Métodos de Pago</h2>
+  <p>Paguen en efectivo en el mismo local, o use Yape.</p>
+  <div class="payment-icons">
+      <img src="pago-efectivo.png" alt="Pago en efectivo" class="payment-icon">
+      <img src="yape.png" alt="Yape" class="payment-icon">
+  </div>
+</section>
+
+<section class="contact">
+  <div class="contact-info">
+      <h3>Contáctenos:</h3>
+      <div class="social-icons">
+          <img src="whatsapp.jpg" alt="WhatsApp">
+          <img src="tik-tok.png" alt="TikTok">
+          <img src="fb.png" alt="Facebook">
+      </div>
+  </div>
+  <div class="location-info">
+      <h3>Ubicarnos:</h3>
+      <p>Calle Horacio Zeballos, Abancay</p>
+      <img src="ubicacion.png" alt="Facebook">
+      
+  </div>
+</section>
 </body>
 </html>
