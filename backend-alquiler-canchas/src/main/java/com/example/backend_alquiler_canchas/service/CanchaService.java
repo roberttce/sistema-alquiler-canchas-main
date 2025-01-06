@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.math.BigDecimal;
 
 @Service
 public class CanchaService {
@@ -42,7 +43,8 @@ public class CanchaService {
 
         cancha.setNombreCancha(canchaDTO.getNombreCancha());
         cancha.setEstado(canchaDTO.getEstado());
-
+        BigDecimal costoPorHora = new BigDecimal(canchaDTO.getCostoPorHora().toString());
+        cancha.setCostoPorHora(costoPorHora);
         cancha = canchaRepository.save(cancha);
         return mapearADTO(cancha);
     }
@@ -57,6 +59,7 @@ public class CanchaService {
         return Cancha.builder()
                 .nombreCancha(canchaDTO.getNombreCancha())
                 .estado(canchaDTO.getEstado())
+                .costoPorHora(new BigDecimal(canchaDTO.getCostoPorHora().toString()))
                 .build();
     }
 
@@ -64,6 +67,7 @@ public class CanchaService {
         return new CanchaDTO(
                 cancha.getIdCancha(),
                 cancha.getNombreCancha(),
+                cancha.getCostoPorHora(),
                 cancha.getEstado()
         );
     }

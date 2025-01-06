@@ -1,9 +1,10 @@
- package com.example.backend_alquiler_canchas.service;
+package com.example.backend_alquiler_canchas.service;
 
 import com.example.backend_alquiler_canchas.dto.AdministradorDTO;
 import com.example.backend_alquiler_canchas.model.Administrador;
 import com.example.backend_alquiler_canchas.repository.AdministradorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,14 +13,17 @@ import java.util.List;
 public class AdministradorService {
 
     private final AdministradorRepository administradorRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdministradorService(AdministradorRepository administradorRepository) {
+    public AdministradorService(AdministradorRepository administradorRepository, BCryptPasswordEncoder passwordEncoder) {
         this.administradorRepository = administradorRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public AdministradorDTO crearAdministrador(AdministradorDTO administradorDTO) {
         validarAdministradorUnico(administradorDTO);
+        administradorDTO.setContrasena(passwordEncoder.encode(administradorDTO.getContrasena()));
         Administrador administrador = mapearADominio(administradorDTO);
         administrador = administradorRepository.save(administrador);
         return mapearADTO(administrador);
@@ -46,6 +50,10 @@ public class AdministradorService {
         administradorExistente.setApellido(administradorDTO.getApellido());
         administradorExistente.setUsuario(administradorDTO.getUsuario());
         administradorExistente.setCorreoElectronico(administradorDTO.getCorreoElectronico());
+
+        if (administradorDTO.getContrasena() != null && !administradorDTO.getContrasena().isEmpty()) {
+            administradorExistente.setContrasena(passwordEncoder.encode(administradorDTO.getContrasena()));
+        }
 
         administradorExistente = administradorRepository.save(administradorExistente);
         return mapearADTO(administradorExistente);
@@ -76,17 +84,18 @@ public class AdministradorService {
                 .apellido(administradorDTO.getApellido())
                 .usuario(administradorDTO.getUsuario())
                 .correoElectronico(administradorDTO.getCorreoElectronico())
+                .contrasena(administradorDTO.getContrasena())
                 .build();
     }
 
     private AdministradorDTO mapearADTO(Administrador administrador) {
-        // Ahora incluimos el idAdministrador en el DTO
         return new AdministradorDTO(
-                administrador.getIdAdministrador(), // Agregamos el ID del administrador
+                administrador.getIdAdministrador(),
                 administrador.getNombre(),
                 administrador.getApellido(),
                 administrador.getUsuario(),
-                administrador.getCorreoElectronico()
+                administrador.getCorreoElectronico(),
+                null
         );
     }
 }

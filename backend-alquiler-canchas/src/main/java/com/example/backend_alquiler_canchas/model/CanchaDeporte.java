@@ -22,4 +22,14 @@ public class CanchaDeporte {
     @ManyToOne(optional = false)
     @JoinColumn(name = "idDeporte", nullable = false, foreignKey = @ForeignKey(name = "fk_deporte"))
     private Deporte deporte;
+
+    public Integer getCanchaIdCancha() {
+        return cancha != null ? cancha.getIdCancha() : null;
+    }
+    public void setCanchaIdCancha(Integer idCancha) {
+        if (this.cancha == null) {
+            this.cancha = new Cancha();
+        }
+        this.cancha.setIdCancha(idCancha);
+    }
 }

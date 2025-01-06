@@ -15,8 +15,4 @@ public class DeporteDTO {
 
     @Size(max = 255, message = "La descripción no puede exceder los 255 caracteres.")
     private String descripcion;
-
-    @NotNull(message = "El costo por hora es obligatorio.")
-    @Digits(integer = 10, fraction = 2, message = "El formato del costo debe ser válido.")
-    private BigDecimal costoPorHora;
 }

@@ -36,6 +36,10 @@ public class Reserva {
     @Digits(integer = 10, fraction = 2, message = "El formato del costo debe ser válido.")
     private BigDecimal costoTotal;
 
+    @NotNull(message = "El adelanto es obligatorio.")
+    @Digits(integer = 10, fraction = 2, message = "El formato del adelanto debe ser válido.")
+    private BigDecimal adelanto;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "idCliente", nullable = false, foreignKey = @ForeignKey(name = "fk_cliente"))
     private Cliente cliente;
@@ -45,7 +49,8 @@ public class Reserva {
     private CanchaDeporte canchaDeporte;
 
     @NotNull(message = "El estado de la reserva es obligatorio.")
-    private Boolean estado;
+    @Enumerated(EnumType.STRING)
+    private EstadoReserva estado;  // Enum para los estados de la reserva
 
     @CreationTimestamp
     private LocalDateTime fechaCreacion;

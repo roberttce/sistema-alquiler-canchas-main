@@ -1,16 +1,34 @@
-package com.example.backend_alquiler_canchas.dto;
+ package com.example.backend_alquiler_canchas.dto;
 
-import lombok.*;
+import com.example.backend_alquiler_canchas.model.EstadoReserva;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservaDTO {
-    private String fechaReserva;
-    private String horaInicio;
-    private String horaFin;
-    private Double costoTotal;
-    private Integer idCliente;
-    private Integer idCanchaDeporte;
-    private boolean estado;
+
+    private Integer idReserva;
+    
+    private LocalDate fechaReserva;
+    
+    private LocalTime horaInicio;
+    
+    private LocalTime horaFin;
+    
+    private BigDecimal costoTotal;
+    
+    private BigDecimal adelanto;
+    
+    private EstadoReserva estado; 
+    
+    private Integer idCliente;   
+    
+    private Integer idCanchaDeporte;   
 }

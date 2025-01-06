@@ -11,4 +11,5 @@ public class AdministradorDTO {
     private String apellido;
     private String usuario;
     private String correoElectronico;
+    private String contrasena;
 }
