@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horario de Reservas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table th {
+            background-color: #41cb05; /* Azul */
+            color: white;
+            text-align: center;
+        }
+
+        .table td {
+            background-color: #f8f9fa; /* Gris claro */
+        }
+        .tables-container {
+            display: flex;
+            overflow: hidden;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .table-wrapper {
+            min-width: 100%;
+        }
+    </style>
+</head>
+<header class="navbar">
+      <h1 class="logo">PhaQchas</h1>
+  <nav class="nav-links">
+      <button class="btn">Tennis</button>
+      <button class="btn">Mesa de billar</button>
+      <button class="register-btn">Regístrese</button>
+  </nav>
+</header>
+<body>
+    <div class="container mt-5">
+      <div class="row mb-4">
+        <div class="col-md-6">
+            <label for="deporte" class="form-label">Seleccione el deporte:</label>
+            <select id="deporte" class="form-select">
+                <option value="futbol">Fútbol</option>
+                <option value="basquet">Básquet</option>
+                <option value="volley">Vóley</option>
+                <option value="tenis">Tenis</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="rango-tiempo" class="form-label">Seleccione el rango de tiempo:</label>
+            <select id="rango-tiempo" class="form-select">
+                <option value="dia">Día</option>
+                <option value="semana">Semana</option>
+            </select>
+        </div>
+      </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Horas</th>
+                        <th>(L) Lunes</th>
+                        <th>(K) Martes</th>
+                        <th>(M) Miércoles</th>
+                        <th>(J) Jueves</th>
+                        <th>(V) Viernes</th>
+                        <th>(S) Sábado</th>
+                        <th>(D) Domingo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>07:00 - 07:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>08:00 - 08:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>09:00 - 09:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>10:00 - 10:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>11:00 - 11:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>12:00 - 12:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>13:00 - 13:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>14:00 - 14:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>15:00 - 15:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>16:00 - 16:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>17:00 - 17:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>18:00 - 18:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td>19:00 - 19:50</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
