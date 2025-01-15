@@ -20,7 +20,7 @@ public class JwtTokenUtil {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SECRET_KEY) // Usamos la clave generada
+                .signWith(SECRET_KEY) 
                 .compact();
     }
 }

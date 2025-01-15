@@ -20,8 +20,6 @@ public class ReservaDTO {
     
     private LocalTime horaInicio;
     
-    private LocalTime horaFin;
-    
     private BigDecimal costoTotal;
     
     private BigDecimal adelanto;

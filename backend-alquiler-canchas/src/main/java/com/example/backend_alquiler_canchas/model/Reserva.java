@@ -28,10 +28,7 @@ public class Reserva {
 
     @NotNull(message = "La hora de inicio es obligatoria.")
     private LocalTime horaInicio;
-
-    @NotNull(message = "La hora de fin es obligatoria.")
-    private LocalTime horaFin;
-
+    
     @NotNull(message = "El costo total es obligatorio.")
     @Digits(integer = 10, fraction = 2, message = "El formato del costo debe ser válido.")
     private BigDecimal costoTotal;

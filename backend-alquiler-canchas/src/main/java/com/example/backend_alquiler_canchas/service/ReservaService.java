@@ -45,8 +45,8 @@ public class ReservaService {
         CanchaDeporte canchaDeporte = canchaDeporteRepository.findById(reservaDTO.getIdCanchaDeporte())
                 .orElseThrow(() -> new IllegalArgumentException("CanchaDeporte no encontrado"));
 
-        BigDecimal costoPorHora = canchaDeporte.getCancha().getCostoPorHora();
-        BigDecimal costoTotal = calcularCostoTotal(reservaDTO.getHoraInicio(), reservaDTO.getHoraFin(), costoPorHora);
+        //BigDecimal costoPorHora = canchaDeporte.getCancha().getCostoPorHora();
+        BigDecimal costoTotal = canchaDeporte.getCancha().getCostoPorHora();
 
         Reserva reserva = mapearADominio(reservaDTO, cliente, canchaDeporte);
         reserva.setCostoTotal(costoTotal);
@@ -68,11 +68,10 @@ public class ReservaService {
         CanchaDeporte canchaDeporte = canchaDeporteRepository.findById(reservaDTO.getIdCanchaDeporte())
                 .orElseThrow(() -> new IllegalArgumentException("CanchaDeporte no encontrado"));
         BigDecimal costoPorHora = canchaDeporte.getCancha().getCostoPorHora();
-        BigDecimal costoTotal = calcularCostoTotal(reservaDTO.getHoraInicio(), reservaDTO.getHoraFin(), costoPorHora);
+        BigDecimal costoTotal = canchaDeporte.getCancha().getCostoPorHora();
 
         reservaExistente.setFechaReserva(reservaDTO.getFechaReserva());
         reservaExistente.setHoraInicio(reservaDTO.getHoraInicio());
-        reservaExistente.setHoraFin(reservaDTO.getHoraFin());
         reservaExistente.setCostoTotal(costoTotal);
         reservaExistente.setAdelanto(reservaDTO.getAdelanto());
         reservaExistente.setEstado(calcularEstadoReserva(reservaExistente.getAdelanto(), reservaExistente.getCostoTotal()));
@@ -140,7 +139,6 @@ public class ReservaService {
         return Reserva.builder()
                 .fechaReserva(reservaDTO.getFechaReserva())
                 .horaInicio(reservaDTO.getHoraInicio())
-                .horaFin(reservaDTO.getHoraFin())
                 .costoTotal(reservaDTO.getCostoTotal())
                 .adelanto(reservaDTO.getAdelanto())
                 .estado(reservaDTO.getEstado())
@@ -153,8 +151,7 @@ public class ReservaService {
         return new ReservaDTO(
                 reserva.getIdReserva(),
                 reserva.getFechaReserva(),
-                reserva.getHoraInicio(),
-                reserva.getHoraFin(),
+                reserva.getHoraInicio(), 
                 reserva.getCostoTotal(),
                 reserva.getAdelanto(),
                 reserva.getEstado(),

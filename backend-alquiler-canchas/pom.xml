@@ -41,7 +41,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<!-- Flyway Core (para la gestión de migraciones de base de datos) -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
