@@ -45,17 +45,23 @@ public class ReservaService {
         CanchaDeporte canchaDeporte = canchaDeporteRepository.findById(reservaDTO.getIdCanchaDeporte())
                 .orElseThrow(() -> new IllegalArgumentException("CanchaDeporte no encontrado"));
 
-        //BigDecimal costoPorHora = canchaDeporte.getCancha().getCostoPorHora();
+        boolean canchaReservada = reservaRepository.existsByFechaReservaAndHoraInicioAndCanchaDeporte_Cancha_IdCancha(
+                reservaDTO.getFechaReserva(), reservaDTO.getHoraInicio(), canchaDeporte.getCancha().getIdCancha());
+
+        if (canchaReservada) {
+            throw new IllegalArgumentException("La cancha ya está reservada para la misma fecha y hora.");
+        }
+
         BigDecimal costoTotal = canchaDeporte.getCancha().getCostoPorHora();
 
         Reserva reserva = mapearADominio(reservaDTO, cliente, canchaDeporte);
         reserva.setCostoTotal(costoTotal);
-
         reserva.setEstado(calcularEstadoReserva(reserva.getAdelanto(), reserva.getCostoTotal()));
 
         reserva = reservaRepository.save(reserva);
         return mapearADTO(reserva);
     }
+
 
     @Transactional
     public ReservaDTO actualizarReserva(Integer idReserva, ReservaDTO reservaDTO) {
@@ -67,21 +73,28 @@ public class ReservaService {
 
         CanchaDeporte canchaDeporte = canchaDeporteRepository.findById(reservaDTO.getIdCanchaDeporte())
                 .orElseThrow(() -> new IllegalArgumentException("CanchaDeporte no encontrado"));
-        BigDecimal costoPorHora = canchaDeporte.getCancha().getCostoPorHora();
-        BigDecimal costoTotal = canchaDeporte.getCancha().getCostoPorHora();
 
-        reservaExistente.setFechaReserva(reservaDTO.getFechaReserva());
-        reservaExistente.setHoraInicio(reservaDTO.getHoraInicio());
-        reservaExistente.setCostoTotal(costoTotal);
-        reservaExistente.setAdelanto(reservaDTO.getAdelanto());
-        reservaExistente.setEstado(calcularEstadoReserva(reservaExistente.getAdelanto(), reservaExistente.getCostoTotal()));
+        Integer idCancha = canchaDeporte.getCancha().getIdCancha();
+
+        boolean canchaReservada = reservaRepository.existsByFechaReservaAndHoraInicioAndCanchaDeporte_Cancha_IdCanchaAndIdReservaNot(
+                reservaDTO.getFechaReserva(), reservaDTO.getHoraInicio(), idCancha, idReserva);
+
+        if (canchaReservada) {
+            throw new IllegalArgumentException("La cancha ya está reservada para la misma fecha y hora.");
+        }
 
         reservaExistente.setCliente(cliente);
         reservaExistente.setCanchaDeporte(canchaDeporte);
+        reservaExistente.setFechaReserva(reservaDTO.getFechaReserva());
+        reservaExistente.setHoraInicio(reservaDTO.getHoraInicio());
+        reservaExistente.setAdelanto(reservaDTO.getAdelanto());
+        reservaExistente.setCostoTotal(canchaDeporte.getCancha().getCostoPorHora());
+        reservaExistente.setEstado(calcularEstadoReserva(reservaExistente.getAdelanto(), reservaExistente.getCostoTotal()));
 
-        reservaExistente = reservaRepository.save(reservaExistente);
+        reservaRepository.save(reservaExistente);
         return mapearADTO(reservaExistente);
     }
+
 
     public List<ReservaDTO> obtenerReservasPorEstado(EstadoReserva estado) {
         return reservaRepository.findByEstado(estado).stream()
