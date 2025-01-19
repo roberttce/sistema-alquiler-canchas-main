@@ -59,6 +59,7 @@ public class ReservaService {
         reserva.setEstado(calcularEstadoReserva(reserva.getAdelanto(), reserva.getCostoTotal()));
 
         reserva = reservaRepository.save(reserva);
+        actualizarReservasIncompletas(cliente.getIdCliente());
         return mapearADTO(reserva);
     }
 
@@ -92,8 +93,13 @@ public class ReservaService {
         reservaExistente.setEstado(calcularEstadoReserva(reservaExistente.getAdelanto(), reservaExistente.getCostoTotal()));
 
         reservaRepository.save(reservaExistente);
+
+        // Actualizamos las reservas incompletas del cliente
+        actualizarReservasIncompletas(cliente.getIdCliente());
+
         return mapearADTO(reservaExistente);
     }
+
 
 
     public List<ReservaDTO> obtenerReservasPorEstado(EstadoReserva estado) {
@@ -115,12 +121,16 @@ public class ReservaService {
                 .collect(Collectors.toList());
     }
     
+    
     public void eliminarReserva(Integer idReserva) {
-        if (!reservaRepository.existsById(idReserva)) {
-            throw new IllegalArgumentException("Reserva no encontrada");
-        }
+        Reserva reserva = reservaRepository.findById(idReserva)
+                .orElseThrow(() -> new IllegalArgumentException("Reserva no encontrada"));
+
         reservaRepository.deleteById(idReserva);
+
+        actualizarReservasIncompletas(reserva.getCliente().getIdCliente());
     }
+
 
     public ReservaDTO confirmarPagoTotal(Integer idReserva) {
         Reserva reserva = reservaRepository.findById(idReserva)
@@ -145,7 +155,15 @@ public class ReservaService {
         } else if (adelanto.compareTo(BigDecimal.ZERO) > 0) {
             return EstadoReserva.PENDIENTE;
         }
-        return EstadoReserva.PENDIENTE;
+        return EstadoReserva.INCOMPLETO;
+    }
+
+    private void actualizarReservasIncompletas(Integer idCliente) {
+        int reservasIncompletas = reservaRepository.countByCliente_IdClienteAndEstado(idCliente, EstadoReserva.INCOMPLETO);
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado"));
+        cliente.setReservasIncompletas(reservasIncompletas);
+        clienteRepository.save(cliente);
     }
 
     private Reserva mapearADominio(ReservaDTO reservaDTO, Cliente cliente, CanchaDeporte canchaDeporte) {

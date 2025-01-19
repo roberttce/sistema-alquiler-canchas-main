@@ -1,7 +1,8 @@
 package com.example.backend_alquiler_canchas.dto;
-
 import jakarta.validation.constraints.*;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -29,4 +30,15 @@ public class ClienteDTO {
     @NotBlank(message = "El DNI es obligatorio.")
     @Size(min = 8, max = 8, message = "El DNI debe tener 8 caracteres.")
     private String dni;
+
+    @NotBlank(message = "La dirección es obligatoria.")
+    @Size(max = 100, message = "La dirección no puede exceder los 100 caracteres.")
+    private String direccion;
+
+    @NotNull(message = "La fecha de nacimiento es obligatoria.")
+    private LocalDate fechaNacimiento;
+
+    @NotNull(message = "El contador de reservas incompletas es obligatorio.")
+    @Min(value = 0, message = "Las reservas incompletas no pueden ser negativas.")
+    private Integer reservasIncompletas;
 }

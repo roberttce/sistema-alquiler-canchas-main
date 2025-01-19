@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 @Entity
 @Table(name = "cliente")
 @Data
@@ -42,9 +42,20 @@ public class Cliente {
     @Column(unique = true)
     private String dni;
 
+    @NotBlank(message = "La dirección es obligatoria.")
+    @Size(max = 100, message = "La dirección no puede exceder los 100 caracteres.")
+    private String direccion;
+
+    @NotNull(message = "La fecha de nacimiento es obligatoria.")
+    private LocalDate fechaNacimiento;
+
+    @NotNull
+    @Min(value = 0, message = "Las reservas incompletas no pueden ser negativas.")
+    private Integer reservasIncompletas;
+
     @CreationTimestamp
     private LocalDateTime fechaCreacion;
-    
+
     @UpdateTimestamp
     private LocalDateTime fechaModificacion;
 }

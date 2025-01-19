@@ -20,4 +20,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
         LocalDate fechaReserva, LocalTime horaInicio, Integer idCancha, Integer idReserva
     );
 
+    int countByCliente_IdClienteAndEstado(Integer idCliente, EstadoReserva estado);
+
+
 }

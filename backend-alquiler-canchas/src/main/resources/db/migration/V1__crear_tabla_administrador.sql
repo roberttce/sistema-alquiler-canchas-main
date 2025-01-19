@@ -26,9 +26,13 @@
         correo_electronico varchar(100) unique not null,
         telefono varchar(15) not null,
         dni varchar(8) unique not null,
+        direccion varchar(100) not null,  
+        fecha_nacimiento date not null,   
+        reservas_incompletas int not null default 0,  -- Añadido el campo reservas incompletas, inicializado en 0
         fecha_creacion datetime default current_timestamp,
         fecha_modificacion datetime default current_timestamp on update current_timestamp
     );
+
 
 -- tabla: deporte
     create table deporte (
@@ -74,6 +78,3 @@
         CONSTRAINT fk_cliente FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
         CONSTRAINT fk_cancha_deporte FOREIGN KEY (id_cancha_deporte) REFERENCES cancha_deporte(id_cancha_deporte)
     );
-
-     
-    

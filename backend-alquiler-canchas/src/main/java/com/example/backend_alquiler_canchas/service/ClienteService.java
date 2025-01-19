@@ -1,4 +1,4 @@
-package com.example.backend_alquiler_canchas.service;
+ package com.example.backend_alquiler_canchas.service;
 
 import com.example.backend_alquiler_canchas.dto.ClienteDTO;
 import com.example.backend_alquiler_canchas.model.Cliente;
@@ -21,6 +21,7 @@ public class ClienteService {
     public ClienteDTO crearCliente(ClienteDTO clienteDTO) {
         validarClienteUnico(clienteDTO);
         Cliente cliente = mapearADominio(clienteDTO);
+        cliente.setReservasIncompletas(0); // Inicializa en 0 al crear
         cliente = clienteRepository.save(cliente);
         return mapearADTO(cliente);
     }
@@ -46,6 +47,8 @@ public class ClienteService {
         clienteExistente.setCorreoElectronico(clienteDTO.getCorreoElectronico());
         clienteExistente.setTelefono(clienteDTO.getTelefono());
         clienteExistente.setDni(clienteDTO.getDni());
+        clienteExistente.setDireccion(clienteDTO.getDireccion());
+        clienteExistente.setFechaNacimiento(clienteDTO.getFechaNacimiento());
 
         clienteExistente = clienteRepository.save(clienteExistente);
         return mapearADTO(clienteExistente);
@@ -78,6 +81,9 @@ public class ClienteService {
                 .correoElectronico(clienteDTO.getCorreoElectronico())
                 .telefono(clienteDTO.getTelefono())
                 .dni(clienteDTO.getDni())
+                .direccion(clienteDTO.getDireccion())
+                .fechaNacimiento(clienteDTO.getFechaNacimiento())
+                .reservasIncompletas(0)  
                 .build();
     }
 
@@ -88,7 +94,10 @@ public class ClienteService {
                 cliente.getApellido(),
                 cliente.getCorreoElectronico(),
                 cliente.getTelefono(),
-                cliente.getDni()
+                cliente.getDni(),
+                cliente.getDireccion(),
+                cliente.getFechaNacimiento(),
+                cliente.getReservasIncompletas()
         );
     }
 }
