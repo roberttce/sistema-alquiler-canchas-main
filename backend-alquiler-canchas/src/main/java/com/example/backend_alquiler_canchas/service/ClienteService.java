@@ -36,6 +36,11 @@ public class ClienteService {
                 .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado con dni: " + dni));
         return mapearADTO(cliente);
     }
+    public Integer obtenerReservasIncompletas(Integer idCliente) {
+        return clienteRepository.findReservasIncompletasByIdCliente(idCliente)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado con ID: " + idCliente));
+    }
+
     public List<ClienteDTO> listarClientes() {
         return clienteRepository.findAll().stream()
                 .map(this::mapearADTO)

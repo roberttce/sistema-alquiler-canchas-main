@@ -37,7 +37,15 @@ public class ClienteController {
         ClienteDTO cliente = clienteService.obtenerClientePorDni(dni);
         return ResponseEntity.ok(new GlobalResponse<>(true, "Cliente encontrado", cliente));
     }
-
+    @GetMapping("/{idCliente}/reservas-incompletas")
+    public ResponseEntity<GlobalResponse<Integer>> obtenerReservasIncompletas(@PathVariable Integer idCliente) {
+        Integer reservasIncompletas = clienteService.obtenerReservasIncompletas(idCliente);
+        return ResponseEntity.ok(new GlobalResponse<>(
+            true,
+            "Reservas incompletas obtenidas exitosamente.",
+            reservasIncompletas
+        ));
+    }
     @GetMapping
     public ResponseEntity<GlobalResponse<List<ClienteDTO>>> listarClientes() {
         List<ClienteDTO> clientes = clienteService.listarClientes();
