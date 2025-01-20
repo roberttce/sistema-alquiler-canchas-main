@@ -32,6 +32,11 @@ public class ClienteController {
         ClienteDTO cliente = clienteService.obtenerClientePorId(idCliente);
         return ResponseEntity.ok(new GlobalResponse<>(true, "Cliente encontrado", cliente));
     }
+    @GetMapping("/dni/{dni}")
+    public ResponseEntity<GlobalResponse<ClienteDTO>> obtenerClientePorId(@PathVariable String dni) {
+        ClienteDTO cliente = clienteService.obtenerClientePorDni(dni);
+        return ResponseEntity.ok(new GlobalResponse<>(true, "Cliente encontrado", cliente));
+    }
 
     @GetMapping
     public ResponseEntity<GlobalResponse<List<ClienteDTO>>> listarClientes() {

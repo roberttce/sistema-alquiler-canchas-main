@@ -31,7 +31,11 @@ public class ClienteService {
                 .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado con ID: " + idCliente));
         return mapearADTO(cliente);
     }
-
+    public ClienteDTO obtenerClientePorDni(String dni){
+    Cliente cliente = clienteRepository.findByDni(dni)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado con dni: " + dni));
+        return mapearADTO(cliente);
+    }
     public List<ClienteDTO> listarClientes() {
         return clienteRepository.findAll().stream()
                 .map(this::mapearADTO)
