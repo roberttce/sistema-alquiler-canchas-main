@@ -2,8 +2,10 @@
 
 import com.example.backend_alquiler_canchas.dto.ClienteDTO;
 import com.example.backend_alquiler_canchas.model.Cliente;
+import com.example.backend_alquiler_canchas.repository.ReservaRepository;
 import com.example.backend_alquiler_canchas.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +14,12 @@ import java.util.List;
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
+    private final ReservaRepository reservaRepository;
 
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository,ReservaRepository reservaRepository) {
         this.clienteRepository = clienteRepository;
+        this.reservaRepository =reservaRepository;
     }
 
     public ClienteDTO crearCliente(ClienteDTO clienteDTO) {
@@ -62,11 +66,12 @@ public class ClienteService {
         clienteExistente = clienteRepository.save(clienteExistente);
         return mapearADTO(clienteExistente);
     }
-
+    @Transactional
     public void eliminarCliente(Integer idCliente) {
         if (!clienteRepository.existsById(idCliente)) {
             throw new IllegalArgumentException("Cliente no encontrado con ID: " + idCliente);
         }
+        reservaRepository.deleteByCliente_IdCliente(idCliente);
         clienteRepository.deleteById(idCliente);
     }
 

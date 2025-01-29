@@ -11,7 +11,7 @@ import java.util.Date;
 @Component
 public class JwtTokenUtil {
 
-    // Genera una clave secreta segura para HS512
+    
     private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 24 horas
 
