@@ -64,5 +64,4 @@ public class CanchaController {
         
         return ResponseEntity.ok(new GlobalResponse<>(true, "Deportes asociados a la cancha exitosamente", canchasDeportesAsociados));
     }
-
 }

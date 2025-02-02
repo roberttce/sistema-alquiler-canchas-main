@@ -113,8 +113,7 @@ public class ReservaService {
         reservaExistente.setEstado(nuevoEstado);
 
         reservaRepository.save(reservaExistente);
-
-        // Actualizar contadores de reservas incompletas
+ 
         actualizarContadoresReservas(idCliente, estadoAnterior ,nuevoEstado);
 
         return mapearADTO(reservaExistente);

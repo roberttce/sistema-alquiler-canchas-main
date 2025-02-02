@@ -58,4 +58,8 @@ public class Cliente {
 
     @UpdateTimestamp
     private LocalDateTime fechaModificacion;
+    public String getNombreCompleto() {
+        return nombre + " " + apellido;
+    }
+
 }
