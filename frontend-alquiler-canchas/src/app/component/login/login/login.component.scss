@@ -1,0 +1,29 @@
+/* Personalización básica para mejorar la apariencia */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .card {
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card h3 {
+    font-size: 1.5rem;
+    color: #343a40;
+  }
+  
+  button:disabled {
+    background-color: #b0c4de;
+    border-color: #b0c4de;
+  }
+  
+  a {
+    color: #007bff;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  

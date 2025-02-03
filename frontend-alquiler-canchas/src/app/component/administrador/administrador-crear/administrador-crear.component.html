@@ -1,0 +1,67 @@
+<app-sidebar></app-sidebar>
+  <div class="content p-4">
+      <div class="container-fluid">
+<div class="container my-4">
+  <div class="card shadow-lg p-4">
+    <h3 class="text-center mb-4">Registrar Administrador</h3>
+    <form [formGroup]="frmAdministrador" (ngSubmit)="guardarAdministrador()">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" class="form-control form-control-sm" formControlName="nombre" required>
+            <div *ngIf="nombreFb.invalid && nombreFb.touched" class="text-danger">
+              Nombre es requerido
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" class="form-control form-control-sm" formControlName="apellido" required>
+            <div *ngIf="apellidoFb.invalid && apellidoFb.touched" class="text-danger">
+              Apellido es requerido
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="usuario">Usuario</label>
+            <input type="text" id="usuario" class="form-control form-control-sm" formControlName="usuario" required>
+            <div *ngIf="usuarioFb.invalid && usuarioFb.touched" class="text-danger">
+              Usuario es requerido
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="correoElectronico">Correo Electrónico</label>
+            <input type="email" id="correoElectronico" class="form-control form-control-sm" formControlName="correoElectronico" required>
+            <div *ngIf="correoElectronicoFb.invalid && correoElectronicoFb.touched" class="text-danger">
+              Correo electrónico inválido o requerido
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="contrasena">Contraseña</label>
+            <input type="password" id="contrasena" class="form-control form-control-sm" formControlName="contrasena" required>
+            <div *ngIf="contrasenaFb.invalid && contrasenaFb.touched" class="text-danger">
+              Contraseña es requerida y debe tener al menos 6 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="frmAdministrador.invalid">Registrar</button>
+    </form>
+  </div>
+</div>
+</div>
+</div>

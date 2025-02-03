@@ -13,7 +13,7 @@
 	position: fixed;
 	top: 50px;
 	background-color: #0f896b;
-	color: white;
+
 	z-index: 1000;
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
@@ -31,16 +31,15 @@
 .user-name {
 	text-align: center;
 	margin-top: 10px;
+	text-size-adjust: 10px;
 	margin-bottom: 20px;
-	background-color: rgb(97, 173, 175);
 }
 .list-group-item {
 	background-color: #0f896b;
-	color: white;
+
 }
 .list-group-item:hover {
 	background-color: #e8ffed;
-	border-radius: 10%;
 }
 .list-group-item i {
 	margin-right: 10px;

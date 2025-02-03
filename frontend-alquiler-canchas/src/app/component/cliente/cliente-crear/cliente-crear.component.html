@@ -1,0 +1,89 @@
+<app-sidebar></app-sidebar>
+  <div class="content p-4">
+      <div class="container-fluid">
+
+<div class="container my-4">
+    <div class="card shadow-lg p-4">
+      <h3 class="text-center mb-4">Registrar Cliente</h3>
+      <form [formGroup]="frmCliente" (ngSubmit)="guardarCliente()">
+        <div class="align-items-center">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" class="form-control form-control-sm" formControlName="nombre" required>
+              <div *ngIf="nombreFb.invalid && nombreFb.touched" class="text-danger">
+                Nombre es requerido
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="apellido">Apellido</label>
+              <input type="text" id="apellido" class="form-control form-control-sm" formControlName="apellido" required>
+              <div *ngIf="apellidoFb.invalid && apellidoFb.touched" class="text-danger">
+                Apellido es requerido
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="correoElectronico">Correo Electrónico</label>
+              <input type="email" id="correoElectronico" class="form-control form-control-sm" formControlName="correoElectronico" required>
+              <div *ngIf="correoElectronicoFb.invalid && correoElectronicoFb.touched" class="text-danger">
+                Correo electrónico inválido o requerido
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="text" id="telefono" class="form-control form-control-sm" formControlName="telefono" required>
+              <div *ngIf="telefonoFb.invalid && telefonoFb.touched" class="text-danger">
+                Teléfono es requerido
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="dni">DNI</label>
+              <input type="text" id="dni" class="form-control form-control-sm" formControlName="dni" required>
+              <div *ngIf="dniFb.invalid && dniFb.touched" class="text-danger">
+                DNI es requerido
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="direccion">Dirección</label>
+              <input type="text" id="direccion" class="form-control form-control-sm" formControlName="direccion" required>
+              <div *ngIf="direccionFb.invalid && direccionFb.touched" class="text-danger">
+                Dirección es requerido
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+              <input type="date" id="fechaNacimiento" class="form-control form-control-sm" formControlName="fechaNacimiento" required>
+              <div *ngIf="fechaNacimientoFb.invalid && fechaNacimientoFb.touched" class="text-danger">
+                Fecha de Nacimiento es requerido
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100" [disabled]="frmCliente.invalid">Registrar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+      </div>
+  </div>

@@ -1,0 +1,32 @@
+<div id="sidebar-wrapper">
+    <div class="sidebar-heading">
+        <div class="user-icon"></div>
+        <div class="user-name">{{ userName }}</div>
+    </div>
+    <div class="list-group list-group-flush">
+        <a href="inicio" class="list-group-item list-group-item-action"><i class="fas fa-home"></i>INICIO</a>
+        <a href="reservas" class="list-group-item list-group-item-action"><i class="fas fa-calendar-alt"></i>Reservas</a>
+        
+        <!-- Menú desplegable para Clientes -->
+        <a class="list-group-item list-group-item-action dropdown-toggle" href="#" id="clientesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-users"></i>Clientes
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="clientesDropdown">
+            <li><a class="dropdown-item" href="api/clientes/crear">Registrar Cliente</a></li>
+            <li><a class="dropdown-item" href="api/clientes">Listar Clientes</a></li>
+        </ul>
+        
+        <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-concierge-bell"></i>Servicios</a>
+        <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-box"></i>Productos</a>
+
+        <!-- Menú desplegable para Administradores -->
+        <a class="list-group-item list-group-item-action dropdown-toggle" href="#" id="administradoresDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-shield"></i>Administradores
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="administradoresDropdown">
+            <li><a class="dropdown-item" href="api/administradores/crear">Registrar Administrador</a></li>
+            <li><a class="dropdown-item" href="api/administradores/getall">Listar Administradores</a></li>
+        </ul>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

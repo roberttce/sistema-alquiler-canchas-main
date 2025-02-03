@@ -1,18 +1,26 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/Landing/login/login.component';
-import { InicioComponent } from './components/Landing/inicio/inicio.component';
-
-import { GetallComponent } from './components/Landing/clientes/getall/getall.component';
-import { HomeComponent } from './components/PaginaWeb/home/home.component';
-import { ReservausuarioComponent } from './components/PaginaWeb/reservausuario/reservausuario.component';
-
+import { AdministradorListarComponent } from './component/administrador/administrador-listar/administrador-listar.component';
+import { AdministradorCrearComponent } from './component/administrador/administrador-crear/administrador-crear.component';
+import { ClienteListarComponent } from './component/cliente/cliente-listar/cliente-listar.component';
+import { ClienteCrearComponent } from './component/cliente/cliente-crear/cliente-crear.component';
+import { LoginComponent } from './component/login/login/login.component';
+import { InicioComponent } from './component/inicio/inicio/inicio.component';
+import { ReservasComponent } from './component/reservas/reservas.component';
+import { authGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: 'login', component: LoginComponent },
-    { path: 'inicio', component: InicioComponent },
-    { path: 'Clientes/getall', component: GetallComponent},
-    { path: 'home', component: HomeComponent }, //ruta para HomeComponent
-    { path: 'reservausuario', component: ReservausuarioComponent }
-];
+	{ path: '', redirectTo: '/api/auth/login', pathMatch: 'full' }, // Redirige al Login
+	
+	{ path: 'api/auth/login', component: LoginComponent },
 
+	// Rutas protegidas con authGuard
+	{ path: 'inicio', component: InicioComponent, canActivate: [authGuard] },
+	{ path: 'reservas', component: ReservasComponent, canActivate: [authGuard] },
+
+	{ path: 'api/administradores/crear', component: AdministradorCrearComponent, canActivate: [authGuard] },
+	{ path: 'api/administradores/getall', component: AdministradorListarComponent, canActivate: [authGuard] },
+
+	{ path: 'api/clientes', component: ClienteListarComponent, canActivate: [authGuard] },
+	{ path: 'api/clientes/crear', component: ClienteCrearComponent, canActivate: [authGuard] },
+
+];

@@ -1,0 +1,112 @@
+<app-sidebar></app-sidebar>
+  <div class="content p-4">
+      <div class="container-fluid">
+
+<div class="container mt-3">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <b class="fs-4">RESERVAS</b>
+      <button class="btn btn-success" (click)="modalRef = modalService.show(createModal)">+ Nueva Reserva</button>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Día</th>
+            <th>Hora</th>
+            <th>Costo</th>
+            <th>Adelanto</th>
+            <th>Cliente</th>
+            <th>Cancha</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reserva of reservas">
+            <td>{{ reserva.idReserva }}</td>
+            <td>{{ reserva.fechaReserva}}</td>
+            <td>{{ reserva.horaInicio}}</td>
+            <td>{{ reserva.costoTotal | currency }}</td>
+            <td>{{ reserva.adelanto | currency }}</td>
+            <td>{{ getNombreCliente(reserva.idCliente) }}</td>
+            <td>{{ getNombreCancha(reserva.idCanchaDeporte) }}</td>
+            <td>{{ reserva.estado }}</td>
+            <td>
+              <button class="btn btn-primary" (click)="editarReserva(reserva, editModal)">Editar</button>
+              <button class="btn btn-danger" (click)="reserva.idReserva !== undefined && eliminarReserva(reserva.idReserva)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de edición -->
+<ng-template #editModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Editar Reserva</h5>
+    <button class="close" (click)="modal.hide()">×</button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm" (ngSubmit)="actualizarReserva(modal)">
+      <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" class="form-control" formControlName="fechaReserva" />
+        <label > Hora</label>
+        <input type="time" class="form-control" formControlName="horaInicio" />
+        <label> Costo Total</label>
+        <input type="" class="form-control" formControlName="costoTotal" />
+        <label> Adelanto</label>
+        <input type="" class="form-control" formControlName="adelanto" />
+        <label> Cliente </label>
+        <select class="form-control" formControlName="idCliente">
+        <option *ngFor="let cliente of clientes" [value]="cliente.idCliente">{{ cliente.nombre }}</option>
+        </select>
+        <label> Cancha </label>
+        <select class="form-control" formControlName="idCancha">
+        <option *ngFor="let cancha of cancha" [value]="cancha.idCancha">{{ cancha.nombreCancha }}</option>
+        </select>
+        <label> Estado</label>
+        <input type="" class="form-control" formControlName="estado" />
+        </div>
+      <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">Guardar</button>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Modal de creación -->
+<ng-template #createModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Nueva Reserva</h5>
+    <button class="close" (click)="modal.hide()">×</button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="createForm" (ngSubmit)="crearReserva(modal)">
+      <div class="form-group">
+        <label>Fecha de Reserva</label>
+        <input type="date" class="form-control" formControlName="fechaReserva" />
+        <label>hora de inicio</label>
+        <input type="time" class="form-control" formControlName="horaInicio" />
+        
+        <label>adelanto</label>
+        <input type="" class="form-control" formControlName="adelanto" />
+        <label> Cliente </label>
+        <select class="form-control" formControlName="idCliente">
+        <option *ngFor="let cliente of clientes" [value]="cliente.idCliente">{{ cliente.nombre }}</option>
+        </select>
+        <label> Cancha </label>
+        <select class="form-control" formControlName="idCancha">
+        <option *ngFor="let cancha of cancha" [value]="cancha.idCancha">{{ cancha.nombreCancha }}</option>
+        </select>
+
+        </div>
+      <button type="submit" class="btn btn-success" [disabled]="createForm.invalid">Crear</button>
+    </form>
+  </div>
+</ng-template>
+
+      </div>
+  </div>

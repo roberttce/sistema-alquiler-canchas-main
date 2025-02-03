@@ -1,0 +1,195 @@
+<app-sidebar></app-sidebar>
+
+<div class="content p-4">
+  <div class="container-fluid">
+    <div class="container" style="margin-top: 7px;">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <b class="fs-4">Listar Clientes</b>
+          <div>
+            <!-- Botón para abrir el modal de registro -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCliente">
+              Registrar Cliente
+            </button>
+          </div>
+        </div>
+        <div class="card-body" style="min-height: 400px;">
+          <div class="d-flex justify-content-between mb-3">
+            <div class="d-flex align-items-center w-50">
+              <div class="me-2 w-100">
+                <input type="text" formControlName="buscarCliente" class="form-control" id="buscarCliente" placeholder="Cliente a buscar..." >
+              </div>
+              <button type="button" class="btn btn-warning" >Limpiar</button>
+            </div>
+          </div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th class="text-center">Correo Electrónico</th>
+                <th class="text-center">Teléfono</th>
+                <th class="text-center">DNI</th>
+                <th class="text-center">Dirección</th>
+                <th class="text-center">Fecha Nacimiento</th>
+                <th class="text-center">Reservas Incompletas</th>
+                <th class="text-center">Eliminar</th>
+                <th class="text-center">Editar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cliente of clientes">
+                <td>{{cliente.idCliente}}</td>
+                <td>{{cliente.nombre}}</td>
+                <td>{{cliente.apellido}}</td>
+                <td class="text-center">{{cliente.correoElectronico}}</td>
+                <td class="text-center">{{cliente.telefono}}</td>
+                <td class="text-center">{{cliente.dni}}</td>
+                <td class="text-center">{{cliente.direccion}}</td>
+                <td class="text-center">{{cliente.fechaNacimiento}}</td>
+                <td class="text-center">{{cliente.reservasIncompletas}}</td>
+
+                <td class="text-center">
+                  <button class="btn btn-danger" (click)="eliminarCliente(cliente.idCliente)">Eliminar</button>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-sm btn-warning" (click)="editarCliente(cliente, editModal)">Editar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #editModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Editar Cliente</h4>
+        <button type="button" class="btn-close" (click)="modalRef?.hide()" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="editNombre" class="form-label">Nombre</label>
+              <input type="text" formControlName="nombre" class="form-control" id="editNombre" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="editApellido" class="form-label">Apellido</label>
+              <input type="text" formControlName="apellido" class="form-control" id="editApellido" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="editCorreo" class="form-label">Correo Electrónico</label>
+              <input type="email" formControlName="correoElectronico" class="form-control" id="editCorreo" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="editTelefono" class="form-label">Teléfono</label>
+              <input type="text" formControlName="telefono" class="form-control" id="editTelefono" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="editDni" class="form-label">DNI</label>
+              <input type="text" formControlName="dni" class="form-control" id="editDni" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="editDireccion" class="form-label">Dirección</label>
+              <input type="text" formControlName="direccion" class="form-control" id="editDireccion" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="editFechaNacimiento" class="form-label">Fecha Nacimiento</label>
+              <input type="date" formControlName="fechaNacimiento" class="form-control" id="editFechaNacimiento" required>
+            </div>
+         
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modalRef?.hide()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="actualizarCliente(editForm.value, modal)">Actualizar</button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+    
+
+    <!-- Modal para registrar cliente -->
+    <div class="modal fade" id="modalCliente" tabindex="-1" aria-labelledby="modalClienteLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalClienteLabel">Registrar Cliente</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="frmCliente" (ngSubmit)="guardarCliente()">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+              
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" id="nombre" class="form-control" formControlName="nombre" required>
+                <div *ngIf="nombreFb.invalid && nombreFb.touched" class="text-danger">
+                  Nombre es requerido
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" id="apellido" class="form-control" formControlName="apellido" required>
+                <div *ngIf="apellidoFb.invalid && apellidoFb.touched" class="text-danger">
+                  Apellido es requerido
+                </div>
+              </div>
+              </div>
+              <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="correoElectronico" class="form-label">Correo Electrónico</label>
+                <input type="email" id="correoElectronico" class="form-control" formControlName="correoElectronico" required>
+                <div *ngIf="correoElectronicoFb.invalid && correoElectronicoFb.touched" class="text-danger">
+                  Correo electrónico inválido o requerido
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" id="telefono" class="form-control" formControlName="telefono" required>
+                <div *ngIf="telefonoFb.invalid && telefonoFb.touched" class="text-danger">
+                  Teléfono es requerido
+                </div>
+              </div>
+              </div>
+              <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <input type="text" id="direccion" class="form-control" formControlName="direccion" required>
+                <div *ngIf="direccionFb.invalid && direccionFb.touched" class="text-danger">
+                  Dirección es requerida
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                <input type="date" id="fechaNacimiento" class="form-control" formControlName="fechaNacimiento" required>
+                <div *ngIf="fechaNacimientoFb.invalid && fechaNacimientoFb.touched" class="text-danger">
+                  Fecha de Nacimiento es requerida
+                </div>
+              </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="dni" class="form-label">DNI</label>
+                <input type="text" id="dni" class="form-control" formControlName="dni" required>
+                <div *ngIf="dniFb.invalid && dniFb.touched" class="text-danger">
+                  DNI es requerido
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="frmCliente.invalid">Registrar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
