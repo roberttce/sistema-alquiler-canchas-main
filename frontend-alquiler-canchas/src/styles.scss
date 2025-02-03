@@ -1,5 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+/*Begin: Override Bootstrap Components*/
+
+.table {
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.7);
+}
+
+/*End: Override Bootstrap Components*/
+
+.divError {
+    color: red;
+    font-size: 14px;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-
 }
+  
+.list-group-item:hover {
+    cursor: pointer;  
+}
+  
