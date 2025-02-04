@@ -7,20 +7,24 @@
 <div class="container-fluid">
   <div class="row mt-4">
     <div class="col-12">
-      <label for="weekRange">Seleccionar semanas:</label>
-      <select id="weekRange" [(ngModel)]="numSemanas" (change)="updateDateRange()">
-        <option [value]="1">1 Semana</option>
-        <option [value]="2">2 Semanas</option>
-      </select>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-outline-success" [class.active]="numSemanas === 1">
+          <input type="radio" name="options" id="option1" autocomplete="off" [value]="1" [(ngModel)]="numSemanas" (change)="updateDateRange()" /> Semana
+        </label>
+        <label class="btn btn-outline-success" [class.active]="numSemanas === 4">
+          <input type="radio" name="options" id="option2" autocomplete="off" [value]="2" [(ngModel)]="numSemanas" (change)="updateDateRange()" /> Mes
+        </label>
+      </div>
     </div>
   </div>
+  
   
   <div class="row mt-3" *ngFor="let cancha of canchasUnicas">
     <div class="col-12">
       <h3>{{ getnombrecancha(cancha.idCancha) }} - </h3>
       <div class="table-responsive">
-        <table class="table table-hover text-center align-middle custom-table">
-          <thead class="table-light">
+        <table class="table table-hover text-center align-middle table-sm">
+          <thead class="table table-light">
             <tr>
               <tr>
                 <th rowspan="2" class="align-middle">Hora</th>
@@ -71,8 +75,11 @@
                   --
                 </ng-container>
                 </td>
-                <td><button class="btn btn-outline-primary btn-sm" (click)="editarReserva(cancha.idCanchaDeporte, i, j)">
-                  <i class="bi bi-pencil"></i>
+                <td><button class="btn btn-outline-primary" (click)="editarReserva(cancha.idCanchaDeporte, i, j)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                  </svg>
                 </button>
                 </td>
               </ng-container>
@@ -108,7 +115,12 @@
           <!-- Nombre del Cliente -->
           <div class="mb-3">
             <label for="nombreCliente" class="form-label">Nombre del Cliente:</label>
-            <input type="text" id="nombreCliente" class="form-control" [(ngModel)]="reserva.nombreCliente" name="nombreCliente" disabled />
+            <input type="text" id="nombreCliente" class="form-control" [value]="reserva.nombreCliente + ' ' + reserva.apellidoCliente" name="nombreCliente" disabled />
+          </div>
+
+          <div class="mb-3">
+            <label for="telefonoCliente" class="form-label">telefono del Cliente:</label>
+            <input type="text" id="telefonoCliente" class="form-control" [value]="reserva.telefonoCliente" name="telefonoCliente" disabled />
           </div>
 
           <!-- Adelanto -->

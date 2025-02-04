@@ -34,6 +34,8 @@ export class InicioComponent {
   reserva = {
     dni: ``,
     nombreCliente: '',
+    apellidoCliente: '',
+    telefonoCliente: '',
     idCliente: 0,
     adelanto: 0
   };
@@ -108,7 +110,7 @@ export class InicioComponent {
         new Array(this.fechasSemana.length).fill(null).map(() => ({
 
           // idReserva: null,
-          nombre: 'Robert',
+          nombre: '',
           adelanto: 0,
           precio: 0
         }))
@@ -193,6 +195,8 @@ export class InicioComponent {
       if (cliente) {
         this.reserva.idCliente = cliente.idCliente;
         this.reserva.nombreCliente = cliente.nombre;
+        this.reserva.apellidoCliente = cliente.apellido;
+        this.reserva.telefonoCliente = cliente.telefono;
       } else {
         alert('Cliente no encontrado');
       }
@@ -246,6 +250,8 @@ export class InicioComponent {
       this.reserva = {
         dni: '', // Puedes hacer una consulta para obtener el DNI si es necesario
         nombreCliente: reservaExistente.nombre,
+        apellidoCliente: reservaExistente.apellido,
+        telefonoCliente: reservaExistente.telefono,
         idCliente: reservaExistente.idReserva,
         adelanto: reservaExistente.adelanto
       };

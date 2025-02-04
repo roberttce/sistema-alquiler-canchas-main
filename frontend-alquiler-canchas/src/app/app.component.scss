@@ -4,8 +4,12 @@
 	top: 0;
 	width: 100%;
 	z-index: 1000;
-	background-color: #a6cda4;
+	background-color: #a7d2a5;
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+.navbar-brand{
+	text-align: center;
+	margin-left: 50%;
 }
 #sidebar-wrapper {
 	height: 100vh;
@@ -26,7 +30,7 @@
 	height: 100px;
 	border-radius: 50%;
 	margin: auto;
-	background-color: white;
+	background-color: rgb(153, 218, 248);
 }
 .user-name {
 	text-align: center;

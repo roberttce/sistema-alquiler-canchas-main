@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "appcwds220242": {
+    "phacchasgestion": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/appcwds220242",
+            "outputPath": "dist/phacchasgestion",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "appcwds220242:build:production"
+              "buildTarget": "phacchasgestion:build:production"
             },
             "development": {
-              "buildTarget": "appcwds220242:build:development"
+              "buildTarget": "phacchasgestion:build:development"
             }
           },
           "defaultConfiguration": "development"
