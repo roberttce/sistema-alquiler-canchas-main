@@ -19,8 +19,6 @@ public class CanchaDTO {
     @NotNull(message = "El costo por hora es obligatorio.")
     @Digits(integer = 10, fraction = 2, message = "El formato del costo debe ser válido.")
     private BigDecimal costoPorHora;
-
-    @NotBlank(message = "El estado es obligatorio.")
-    @Pattern(regexp = "disponible|reservada|mantenimiento", message = "Estado inválido.")
+    
     private String estado;
 }

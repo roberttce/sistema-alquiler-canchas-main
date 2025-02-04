@@ -1,4 +1,4 @@
-package com.example.backend_alquiler_canchas.service;
+ package com.example.backend_alquiler_canchas.service;
 
 import com.example.backend_alquiler_canchas.dto.ReservaDTO;
 import com.example.backend_alquiler_canchas.model.CanchaDeporte;
@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.time.Duration;
 
 @Service
 public class ReservaService {
@@ -59,17 +58,15 @@ public class ReservaService {
         if (reservaDTO.getAdelanto().compareTo(costoTotal) > 0) {
             throw new IllegalArgumentException("El adelanto no puede ser mayor al costo total.");
         }
+        
         Reserva reserva = mapearADominio(reservaDTO, cliente, canchaDeporte);
         reserva.setCostoTotal(costoTotal);
         
+        // Se determina el estado: COMPLETADA si el adelanto es igual o mayor al costo total, de lo contrario PENDIENTE.
         EstadoReserva nuevoEstado = calcularEstadoReserva(reserva.getAdelanto(), reserva.getCostoTotal());
         reserva.setEstado(nuevoEstado);
 
         reserva = reservaRepository.save(reserva);
-        
-        if (nuevoEstado == EstadoReserva.INCOMPLETO) {
-            incrementarReservasIncompletas(cliente.getIdCliente());
-        }
         
         return mapearADTO(reserva);
     }
@@ -78,9 +75,6 @@ public class ReservaService {
     public ReservaDTO actualizarReserva(Integer idReserva, ReservaDTO reservaDTO) {
         Reserva reservaExistente = reservaRepository.findById(idReserva)
                 .orElseThrow(() -> new IllegalArgumentException("Reserva no encontrada"));
-        
-        EstadoReserva estadoAnterior = reservaExistente.getEstado();
-        Integer idCliente = reservaExistente.getCliente().getIdCliente();
 
         Cliente cliente = clienteRepository.findById(reservaDTO.getIdCliente())
                 .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado"));
@@ -114,8 +108,6 @@ public class ReservaService {
 
         reservaRepository.save(reservaExistente);
  
-        actualizarContadoresReservas(idCliente, estadoAnterior ,nuevoEstado);
-
         return mapearADTO(reservaExistente);
     }
 
@@ -129,14 +121,9 @@ public class ReservaService {
         }
 
         reserva.setAdelanto(reserva.getCostoTotal());
-        EstadoReserva estadoAnterior = reserva.getEstado();
         reserva.setEstado(EstadoReserva.COMPLETADA);
 
         reserva = reservaRepository.save(reserva);
-
-        if (estadoAnterior == EstadoReserva.INCOMPLETO) {
-            decrementarReservasIncompletas(reserva.getCliente().getIdCliente());
-        }
 
         return mapearADTO(reserva);
     }
@@ -145,47 +132,18 @@ public class ReservaService {
     public void eliminarReserva(Integer idReserva) {
         Reserva reserva = reservaRepository.findById(idReserva)
                 .orElseThrow(() -> new IllegalArgumentException("Reserva no encontrada"));
-
-        if (reserva.getEstado() == EstadoReserva.INCOMPLETO) {
-            decrementarReservasIncompletas(reserva.getCliente().getIdCliente());
-        }
-
         reservaRepository.deleteById(idReserva);
     }
 
-    private void actualizarContadoresReservas(Integer idCliente, EstadoReserva estadoAnterior, EstadoReserva estadoNuevo) {
-    // Si el estado anterior era INCOMPLETO, decrementar el contador del cliente anterior
-        if (estadoAnterior == EstadoReserva.INCOMPLETO) {
-            decrementarReservasIncompletas(idCliente);
-        }
-
-        // Si el nuevo estado es INCOMPLETO, incrementar el contador del nuevo cliente
-        if (estadoNuevo == EstadoReserva.INCOMPLETO) {
-            incrementarReservasIncompletas(idCliente);
-        }
-    }
-
-    private void incrementarReservasIncompletas(Integer idCliente) {
-        Cliente cliente = clienteRepository.findById(idCliente)
-                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado"));
-        cliente.setReservasIncompletas(cliente.getReservasIncompletas() + 1);
-        clienteRepository.save(cliente);
-    }
-
-    private void decrementarReservasIncompletas(Integer idCliente) {
-        Cliente cliente = clienteRepository.findById(idCliente)
-                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado"));
-        cliente.setReservasIncompletas(Math.max(0, cliente.getReservasIncompletas() - 1));
-        clienteRepository.save(cliente);
-    }
-
+    // Método que calcula el estado de la reserva:
+    // Si el adelanto es igual o mayor al costo total, la reserva se marca como COMPLETADA;
+    // en caso contrario, se marca como PENDIENTE.
     private EstadoReserva calcularEstadoReserva(BigDecimal adelanto, BigDecimal costoTotal) {
         if (adelanto.compareTo(costoTotal) >= 0) {
             return EstadoReserva.COMPLETADA;
-        } else if (adelanto.compareTo(BigDecimal.ZERO) > 0) {
+        } else {
             return EstadoReserva.PENDIENTE;
         }
-        return EstadoReserva.INCOMPLETO;
     }
 
     private Reserva mapearADominio(ReservaDTO reservaDTO, Cliente cliente, CanchaDeporte canchaDeporte) {

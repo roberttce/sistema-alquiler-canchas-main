@@ -20,6 +20,7 @@ public class CanchaService {
     }
 
     public CanchaDTO crearCancha(CanchaDTO canchaDTO) {
+        canchaDTO.setEstado("disponible");
         Cancha cancha = mapearADominio(canchaDTO);
         cancha = canchaRepository.save(cancha);
         return mapearADTO(cancha);

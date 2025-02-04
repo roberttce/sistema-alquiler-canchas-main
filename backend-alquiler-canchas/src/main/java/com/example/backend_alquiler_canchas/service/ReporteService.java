@@ -42,12 +42,11 @@ public class ReporteService {
     public ByteArrayInputStream generarReporteSemanal(LocalDate fecha) throws IOException {
         LocalDate monday = fecha.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate sunday = fecha.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
-        // Se usa la plantilla existente
-        ClassPathResource resource = new ClassPathResource("reportesPhaqchas.xlsx");
-        InputStream templateStream = resource.getInputStream();
-        Workbook workbook = new XSSFWorkbook(templateStream);
-        Sheet sheet = workbook.getSheetAt(0);
+        // Se crea plantilla  
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Reporte");
         int rowOffset = sheet.getLastRowNum() + 2;
+
 
         // Estilos
         CellStyle generalTitleStyle = workbook.createCellStyle();
@@ -451,55 +450,55 @@ public class ReporteService {
     }
     
     public ByteArrayInputStream generarReporteMensual(LocalDate fecha) throws IOException {
-    LocalDate firstDay = fecha.withDayOfMonth(1);
-    LocalDate lastDay = fecha.withDayOfMonth(fecha.lengthOfMonth());
-    Workbook workbook = new XSSFWorkbook();
-    Sheet sheet = workbook.createSheet("Reporte Mensual");
-    int rowOffset = 0;
+        LocalDate firstDay = fecha.withDayOfMonth(1);
+        LocalDate lastDay = fecha.withDayOfMonth(fecha.lengthOfMonth());
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Reporte Mensual");
+        int rowOffset = 0;
 
-    Row titleRow = sheet.createRow(rowOffset++);
-    Cell titleCell = titleRow.createCell(0);
-    titleCell.setCellValue("REPORTE MENSUAL: " + firstDay.getMonth() + " " + firstDay.getYear());
-    sheet.addMergedRegion(new CellRangeAddress(titleRow.getRowNum(), titleRow.getRowNum(), 0, 3));
-    rowOffset++;
-
-    for (CanchaDeporte cd : canchaDeporteRepository.findAll()) {
-        Row canchaRow = sheet.createRow(rowOffset++);
-        Cell canchaCell = canchaRow.createCell(0);
-        canchaCell.setCellValue(cd.getCancha().getNombreCancha());
-        sheet.addMergedRegion(new CellRangeAddress(canchaRow.getRowNum(), canchaRow.getRowNum(), 0, 3));
-
-        Row headerRow = sheet.createRow(rowOffset++);
-        headerRow.createCell(0).setCellValue("Semana");
-        headerRow.createCell(1).setCellValue("Reservado");
-        headerRow.createCell(2).setCellValue("Yapeo");
-        headerRow.createCell(3).setCellValue("Precio");
-
-        for (LocalDate current = firstDay; !current.isAfter(lastDay); current = current.plusWeeks(1)) {
-            LocalDate weekEnd = current.plusDays(6).isAfter(lastDay) ? lastDay : current.plusDays(6);
-            List<Reserva> reservas = reservaRepository.findByFechaReservaBetweenAndCanchaDeporte(current, weekEnd, cd);
-            int reservedCount = reservas.size();
-            BigDecimal totalYapeo = reservas.stream().map(Reserva::getAdelanto).reduce(BigDecimal.ZERO, BigDecimal::add);
-            BigDecimal totalPrecio = reservas.stream().map(r -> r.getCanchaDeporte().getCancha().getCostoPorHora()).reduce(BigDecimal.ZERO, BigDecimal::add);
-            
-            Row dataRow = sheet.createRow(rowOffset++);
-            dataRow.createCell(0).setCellValue("Semana " + current + " - " + weekEnd);
-            dataRow.createCell(1).setCellValue(reservedCount);
-            dataRow.createCell(2).setCellValue(totalYapeo.doubleValue());
-            dataRow.createCell(3).setCellValue(totalPrecio.doubleValue());
-        }
+        Row titleRow = sheet.createRow(rowOffset++);
+        Cell titleCell = titleRow.createCell(0);
+        titleCell.setCellValue("REPORTE MENSUAL: " + firstDay.getMonth() + " " + firstDay.getYear());
+        sheet.addMergedRegion(new CellRangeAddress(titleRow.getRowNum(), titleRow.getRowNum(), 0, 3));
         rowOffset++;
-    }
 
-    for (int i = 0; i < 4; i++) {
-        sheet.autoSizeColumn(i);
-    }
+        for (CanchaDeporte cd : canchaDeporteRepository.findAll()) {
+            Row canchaRow = sheet.createRow(rowOffset++);
+            Cell canchaCell = canchaRow.createCell(0);
+            canchaCell.setCellValue(cd.getCancha().getNombreCancha());
+            sheet.addMergedRegion(new CellRangeAddress(canchaRow.getRowNum(), canchaRow.getRowNum(), 0, 3));
 
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    workbook.write(out);
-    workbook.close();
-    return new ByteArrayInputStream(out.toByteArray());
-}
+            Row headerRow = sheet.createRow(rowOffset++);
+            headerRow.createCell(0).setCellValue("Semana");
+            headerRow.createCell(1).setCellValue("Reservado");
+            headerRow.createCell(2).setCellValue("Yapeo");
+            headerRow.createCell(3).setCellValue("Precio");
+
+            for (LocalDate current = firstDay; !current.isAfter(lastDay); current = current.plusWeeks(1)) {
+                LocalDate weekEnd = current.plusDays(6).isAfter(lastDay) ? lastDay : current.plusDays(6);
+                List<Reserva> reservas = reservaRepository.findByFechaReservaBetweenAndCanchaDeporte(current, weekEnd, cd);
+                int reservedCount = reservas.size();
+                BigDecimal totalYapeo = reservas.stream().map(Reserva::getAdelanto).reduce(BigDecimal.ZERO, BigDecimal::add);
+                BigDecimal totalPrecio = reservas.stream().map(r -> r.getCanchaDeporte().getCancha().getCostoPorHora()).reduce(BigDecimal.ZERO, BigDecimal::add);
+                
+                Row dataRow = sheet.createRow(rowOffset++);
+                dataRow.createCell(0).setCellValue("Semana " + current + " - " + weekEnd);
+                dataRow.createCell(1).setCellValue(reservedCount);
+                dataRow.createCell(2).setCellValue(totalYapeo.doubleValue());
+                dataRow.createCell(3).setCellValue(totalPrecio.doubleValue());
+            }
+            rowOffset++;
+        }
+
+        for (int i = 0; i < 4; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        workbook.write(out);
+        workbook.close();
+        return new ByteArrayInputStream(out.toByteArray());
+    }
 
 
 
