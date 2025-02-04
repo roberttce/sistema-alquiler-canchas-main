@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   userName: string = 'Usuario'; // Valor por defecto
-
+  reportDate: string = '2025-02-01'; // Fecha por defecto
   ngOnInit() {
     // Obtener el nombre del usuario de localStorage
     const storedUser = localStorage.getItem('usuario');
@@ -18,6 +18,8 @@ export class SidebarComponent {
       this.userName = storedUser;
     }
   }
-
+  updateDate(event: any) {
+    this.reportDate = event.target.value; // Actualiza la fecha según la selección
+  }
 
 }
