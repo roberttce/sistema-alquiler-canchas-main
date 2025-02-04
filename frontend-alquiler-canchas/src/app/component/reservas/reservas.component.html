@@ -1,6 +1,7 @@
 <app-sidebar></app-sidebar>
   <div class="content p-4">
       <div class="container-fluid">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <div class="container mt-3">
   <div class="card">
@@ -34,8 +35,10 @@
             <td>{{ getNombreCancha(reserva.idCanchaDeporte) }}</td>
             <td>{{ reserva.estado }}</td>
             <td>
-              <button class="btn btn-primary" (click)="editarReserva(reserva, editModal)">Editar</button>
-              <button class="btn btn-danger" (click)="reserva.idReserva !== undefined && eliminarReserva(reserva.idReserva)">Eliminar</button>
+            <button class="btn btn-primary" (click)="editarReserva(reserva, editModal)">
+             <i class="fas fa-edit"></i>  </button>
+             <button class="btn btn-danger" (click)="reserva.idReserva !== undefined && eliminarReserva(reserva.idReserva)">
+            <i class="fas fa-trash-alt"></i> </button>
             </td>
           </tr>
         </tbody>

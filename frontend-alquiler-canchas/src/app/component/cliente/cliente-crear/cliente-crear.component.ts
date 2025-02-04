@@ -34,10 +34,10 @@ export class ClienteCrearComponent {
       nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
       correoElectronico: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required]],  // Añadir teléfono
-      dni: ['', [Validators.required]],  // Añadir DNI
+      telefono: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],  // Añadir teléfono
+      dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],  // Añadir DNI
       direccion: ['', [Validators.required]],
-      fechaNacimiento: ['', [Validators.required]],
+      fechaNacimiento: ['', [Validators.required, this.fechaNoFutura]],
     
     });
   }
@@ -52,6 +52,15 @@ export class ClienteCrearComponent {
   get direccionFb() { return this.frmCliente.controls['direccion']; }
   get fechaNacimientoFb() { return this.frmCliente.controls['fechaNacimiento']; }  // Añadir teléfono
   
+   // Validación personalizada para evitar fechas futuras
+   fechaNoFutura(control: any) {
+    if (!control.value) return null; // Si el campo está vacío, no aplicar validación
+
+    const fechaIngresada = new Date(control.value);
+    const fechaActual = new Date();
+
+    return fechaIngresada > fechaActual ? { fechaFutura: true } : null;
+  }
   
 
   // Función para guardar el nuevo cliente
