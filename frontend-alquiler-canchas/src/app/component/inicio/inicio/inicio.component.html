@@ -1,144 +1,109 @@
-
-
-  <app-sidebar></app-sidebar>
-  <div class="content p-4">
-      <div class="container-fluid">
-
-<div class="container-fluid">
-  <div class="row mt-4">
-    <div class="col-12">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-outline-success" [class.active]="numSemanas === 1">
-          <input type="radio" name="options" id="option1" autocomplete="off" [value]="1" [(ngModel)]="numSemanas" (change)="updateDateRange()" /> Semana
-        </label>
-        <label class="btn btn-outline-success" [class.active]="numSemanas === 4">
-          <input type="radio" name="options" id="option2" autocomplete="off" [value]="2" [(ngModel)]="numSemanas" (change)="updateDateRange()" /> Mes
-        </label>
-      </div>
-    </div>
-  </div>
-  
-  
-  <div class="row mt-3" *ngFor="let cancha of canchasUnicas">
-    <div class="col-12">
-      <h3>{{ getnombrecancha(cancha.idCancha) }} - </h3>
-      <div class="table-responsive">
-        <table class="table table-hover text-center align-middle table-sm">
-          <thead class="table table-light">
-            <tr>
-              <tr>
-                <th rowspan="2" class="align-middle">Hora</th>
-                <th class="text-center" colspan="4" *ngFor="let fecha of fechasSemana">
-                  {{ fecha | date:'EEEE dd/MM' }}
-                </th>
-              </tr>
-              <tr>
-                <ng-container *ngFor="let fecha of fechasSemana">
-                  <th>Nombre</th>
-                  <th>Yapeo</th>
-                  <th>Precio</th>
-                  <th></th>
-                </ng-container>
-              </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let hora of horarios; let i = index">
-              <td>{{ hora }}</td>
-              <ng-container *ngFor="let fecha of fechasSemana; let j = index">
-                <td (click)="abrirFormulario(cancha.idCanchaDeporte, i, j, fecha.toISOString(), hora)">
-                  <!-- Si hay reserva, muestra los detalles -->
-                  <ng-container *ngIf="estadoCeldas[cancha.idCancha][i][j]">
-                  {{ estadoCeldas[cancha.idCancha][i][j]?.nombre }}
-                  </ng-container>
-                  <!-- Si no hay reserva, muestra 'Libre' -->
-                  <ng-container *ngIf="!estadoCeldas[cancha.idCancha][i][j]">
-                  Libre
-                  </ng-container>
-                </td>
-                <td (click)="abrirFormulario(cancha.idCanchaDeporte, i, j, fecha.toISOString(), hora)">
-                  <!-- Adelanto de la reserva -->
-                <ng-container *ngIf="estadoCeldas[cancha.idCancha][i][j]">
-                  {{ estadoCeldas[cancha.idCancha][i][j]?.adelanto }}
-                </ng-container>
-                <!-- Si no hay reserva, deja la celda vacía -->
-                <ng-container *ngIf="!estadoCeldas[cancha.idCancha][i][j]">
-                  --
-                </ng-container>
-                </td>
-                <td (click)="abrirFormulario(cancha.idCanchaDeporte, i, j, fecha.toISOString(), hora)">
-                      <!-- Costo de la reserva -->
-                <ng-container *ngIf="estadoCeldas[cancha.idCancha][i][j]">
-                  {{ estadoCeldas[cancha.idCancha][i][j]?.precio }}
-                </ng-container>
-                <!-- Si no hay reserva, deja la celda vacía -->
-                <ng-container *ngIf="!estadoCeldas[cancha.idCancha][i][j]">
-                  --
-                </ng-container>
-                </td>
-                <td><button class="btn btn-outline-primary" (click)="editarReserva(cancha.idCanchaDeporte, i, j)">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                  </svg>
-                </button>
-                </td>
-              </ng-container>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Formulario flotante -->
-
-<div class="modal fade" [class.show]="mostrarFormulario" [style.display]="mostrarFormulario ? 'block' : 'none'" tabindex="-1">
-
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Registrar Reserva</h5>
-        <button type="button" class="btn-close" (click)="cerrarFormulario()" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form (ngSubmit)="guardarReserva()">
-          
-          <!-- DNI del Cliente -->
-          <div class="mb-3">
-            <label for="dni" class="form-label">DNI del Cliente:</label>
-            <div class="input-group">
-              <input type="text" id="dni" class="form-control" [(ngModel)]="reserva.dni" name="dni" required />
-              <button type="button" class="btn btn-primary" (click)="buscarClientePorDNI()">Buscar</button>
+<app-sidebar></app-sidebar>
+<div class="content p-4">
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-success" [class.active]="numSemanas === 1">
+                            <input type="radio" name="options" id="option1" autocomplete="off" [value]="1" [(ngModel)]="numSemanas" (change)="updateDateRange()" /> Semana
+                        </label>
+                        <label class="btn btn-outline-success" [class.active]="numSemanas === 4">
+                            <input type="radio" name="options" id="option2" autocomplete="off" [value]="2" [(ngModel)]="numSemanas" (change)="updateDateRange()" /> Mes
+                        </label>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <!-- Nombre del Cliente -->
-          <div class="mb-3">
-            <label for="nombreCliente" class="form-label">Nombre del Cliente:</label>
-            <input type="text" id="nombreCliente" class="form-control" [value]="reserva.nombreCliente + ' ' + reserva.apellidoCliente" name="nombreCliente" disabled />
-          </div>
-
-          <div class="mb-3">
-            <label for="telefonoCliente" class="form-label">telefono del Cliente:</label>
-            <input type="text" id="telefonoCliente" class="form-control" [value]="reserva.telefonoCliente" name="telefonoCliente" disabled />
-          </div>
-
-          <!-- Adelanto -->
-          <div class="mb-3">
-            <label for="adelanto" class="form-label">Adelanto:</label>
-            <input type="number" id="adelanto" class="form-control" [(ngModel)]="reserva.adelanto" name="adelanto" required />
-          </div>
-
-          <!-- Botones -->
-          <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-success">Guardar Reserva</button>
-          </div>
-        </form>
-      </div>
+            <div class="row mt-3" *ngFor="let cancha of canchasUnicas">
+                <div class="col-12">
+                    <h3>{{ getnombrecancha(cancha.idCancha) }}</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover text-center align-middle table-sm">
+                            <thead class="table table-light">
+                                <tr>
+                                    <th rowspan="2" class="align-middle sticky-col">Hora</th>
+                                    <th class="text-center" colspan="4" *ngFor="let fecha of fechasSemana">
+                                        {{ fecha | date:'EEEE dd/MM' : 'es' }}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <ng-container *ngFor="let fecha of fechasSemana">
+                                        <th>Nombre</th>
+                                        <th>Yapeo</th>
+                                        <th>Precio</th>
+                                        <th></th>
+                                    </ng-container>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let hora of horarios; let i = index">
+                                    <td class="sticky-col">{{ hora }}</td>
+                                    <ng-container *ngFor="let fecha of fechasSemana; let j = index">
+                                        <td (click)="abrirFormulario(cancha.idCanchaDeporte, i, j, fecha.toISOString(), hora)">
+                                            {{ estadoCeldas[cancha.idCancha][i][j]?.nombre || '-' }}
+                                        </td>
+                                        <td (click)="abrirFormulario(cancha.idCanchaDeporte, i, j, fecha.toISOString(), hora)">
+                                            {{ estadoCeldas[cancha.idCancha][i][j]?.adelanto || 0 }}
+                                        </td>
+                                        <td (click)="abrirFormulario(cancha.idCanchaDeporte, i, j, fecha.toISOString(), hora)">
+                                            {{ estadoCeldas[cancha.idCancha][i][j]?.precio || 0 }}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-outline-primary" (click)="editarReserva(cancha.idCanchaDeporte, i, j)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Formulario flotante -->
+        <div class="modal fade" [class.show]="mostrarFormulario" [style.display]="mostrarFormulario ? 'block' : 'none'" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Registrar Reserva</h5>
+                        <button type="button" class="btn-close" (click)="cerrarFormulario()" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form (ngSubmit)="guardarReserva()">
+                            <!-- DNI del Cliente -->
+                            <div class="mb-3">
+                                <label for="dni" class="form-label">DNI del Cliente:</label>
+                                <div class="input-group">
+                                    <input type="text" id="dni" class="form-control" [(ngModel)]="reserva.dni" name="dni" required />
+                                    <button type="button" class="btn btn-primary" (click)="buscarClientePorDNI()">Buscar</button>
+                                </div>
+                            </div>
+                            <!-- Nombre del Cliente -->
+                            <div class="mb-3">
+                                <label for="nombreCliente" class="form-label">Nombre del Cliente:</label>
+                                <input type="text" id="nombreCliente" class="form-control" [value]="reserva.nombreCliente + ' ' + reserva.apellidoCliente" name="nombreCliente" disabled />
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefonoCliente" class="form-label">telefono del Cliente:</label>
+                                <input type="text" id="telefonoCliente" class="form-control" [value]="reserva.telefonoCliente" name="telefonoCliente" disabled />
+                            </div>
+                            <!-- Adelanto -->
+                            <div class="mb-3">
+                                <label for="adelanto" class="form-label">Adelanto:</label>
+                                <input type="number" id="adelanto" class="form-control" [(ngModel)]="reserva.adelanto" name="adelanto" required />
+                            </div>
+                            <!-- Botones -->
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-success">Guardar Reserva</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-
-</div>
-</div>
-<script></script>

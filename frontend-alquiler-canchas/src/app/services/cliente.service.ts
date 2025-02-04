@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { AdministradorDTO } from '../models/administrador.dto';
 import { ClienteDTO } from '../models/cliente.dto';
+
+interface GlobalResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,9 +22,8 @@ export class ClienteService {
       return this.http.post(`${this.apiUrl}`, cliente); // POST para crear cliente
   }
 
-  // Método para listar administradores
-  listarClientes(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`);
+  listarClientes(): Observable<GlobalResponse<ClienteDTO[]>> {
+    return this.http.get<GlobalResponse<ClienteDTO[]>>(`${this.apiUrl}`);
   }
 
   eliminarCliente(idCliente: number): Observable<any> {

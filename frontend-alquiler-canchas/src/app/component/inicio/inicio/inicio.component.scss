@@ -83,4 +83,15 @@
   .btn-outline-primary {
 	border-radius: 5px;
   }
-  
+  .table-responsive {
+    overflow-x: auto; /* Permite el desplazamiento horizontal */
+    white-space: nowrap;
+}
+
+.sticky-col, td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white; /* Asegura que no se sobreponga con otras celdas */
+    z-index: 2;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Opcional: Sombra para separar */
+}
