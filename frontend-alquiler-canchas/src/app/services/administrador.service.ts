@@ -7,7 +7,7 @@ import { AdministradorDTO } from '../models/administrador.dto';
 })
 export class AdministradorService {
 
-  private apiUrl = 'http://back-phaqchas-env.eba-ffug332t.us-east-2.elasticbeanstalk.com/api/administradores';  // Cambia según tu URL base
+  private apiUrl = 'https://d3frs4kuns9exf.cloudfront.net/api/administradores';  // Cambia según tu URL base
 
   constructor(private http: HttpClient) { }
 

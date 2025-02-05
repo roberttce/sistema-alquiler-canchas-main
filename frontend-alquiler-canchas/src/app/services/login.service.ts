@@ -10,7 +10,7 @@ import { LoginResponseDTO } from '../models/loginResponse.dto';
 
 export class LoginService {
 
-	private apiUrl = 'http://back-phaqchas-env.eba-ffug332t.us-east-2.elasticbeanstalk.com/api/auth';  // Verifica que la URL sea correcta
+	private apiUrl = 'https://d3frs4kuns9exf.cloudfront.net/api/auth';  // Verifica que la URL sea correcta
 
   constructor(private http: HttpClient) {}
 

@@ -203,13 +203,5 @@ export class AdministradorListarComponent {
     this.frmAdministrador.reset(); // Asegurar que el formulario esté limpio antes de abrir
     this.modalRef = this.modalService.show(modal);
   }
-
-    limpiar(){
-      // Lógica para limpiar los filtros
-    }
-  
-    // Método para filtrar la lista de administradores
-    filterCountries() {}
-  
  
 }

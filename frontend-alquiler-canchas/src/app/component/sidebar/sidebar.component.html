@@ -17,18 +17,6 @@
             <li><a class="dropdown-item" href="api/clientes/crear">Registrar Cliente</a></li>
             <li><a class="dropdown-item" href="api/clientes">Listar Clientes</a></li>
         </ul>
-        
-        <a href="#" class="list-group-item list-group-item-action dropdown-toggle" id="reportesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-box"></i>Reportes
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="reportesDropdown">
-            <li>
-                <input type="date" [value]="reportDate" (change)="updateDate($event)" />
-                <a class="dropdown-item" [href]="'http://back-phaqchas-env.eba-ffug332t.us-east-2.elasticbeanstalk.com/api/reportes/diario?fecha=' + reportDate" download>Diario</a>
-                <a class="dropdown-item" [href]="'http://back-phaqchas-env.eba-ffug332t.us-east-2.elasticbeanstalk.com/api/reportes/semana?fecha=' + reportDate" download>Semanal</a>
-                <a class="dropdown-item" [href]="'http://back-phaqchas-env.eba-ffug332t.us-east-2.elasticbeanstalk.com/api/reportes/mes?fecha=' + reportDate" download>Mensual</a>
-            </li>
-        </ul>
 
         <!-- Menú desplegable para Administradores -->
         <a class="list-group-item list-group-item-action dropdown-toggle" href="#" id="administradoresDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,6 +25,18 @@
         <ul class="dropdown-menu" aria-labelledby="administradoresDropdown">
             <li><a class="dropdown-item" href="api/administradores/crear">Registrar Administrador</a></li>
             <li><a class="dropdown-item" href="api/administradores/getall">Listar Administradores</a></li>
+        </ul>
+
+        <a href="#" class="list-group-item list-group-item-action dropdown-toggle" id="reportesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-box"></i>Reportes
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="reportesDropdown">
+            <li>
+                <input type="date" [value]="reportDate" (change)="updateDate($event)" />
+                <a class="dropdown-item" [href]="'https://d3frs4kuns9exf.cloudfront.net/api/reportes/diario?fecha=' + reportDate" download>Diario</a>
+                <a class="dropdown-item" [href]="'https://d3frs4kuns9exf.cloudfront.net/api/reportes/semana?fecha=' + reportDate" download>Semanal</a>
+                <a class="dropdown-item" [href]="'https://d3frs4kuns9exf.cloudfront.net/api/reportes/mes?fecha=' + reportDate" download>Mensual</a>
+            </li>
         </ul>
         
     </div>

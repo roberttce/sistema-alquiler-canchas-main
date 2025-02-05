@@ -14,7 +14,7 @@ interface GlobalResponse<T> {
 })
 export class ClienteService {
 
-  private apiUrl = 'http://back-phaqchas-env.eba-ffug332t.us-east-2.elasticbeanstalk.com/api/clientes';  // Cambia según tu URL base
+  private apiUrl = 'https://d3frs4kuns9exf.cloudfront.net/api/clientes';  // Cambia según tu URL base
 
   constructor(private http: HttpClient) { }
 

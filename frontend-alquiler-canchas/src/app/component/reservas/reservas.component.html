@@ -29,8 +29,8 @@
             <td>{{ reserva.idReserva }}</td>
             <td>{{ reserva.fechaReserva}}</td>
             <td>{{ reserva.horaInicio}}</td>
-            <td>{{ reserva.costoTotal | currency }}</td>
-            <td>{{ reserva.adelanto | currency }}</td>
+            <td>{{ reserva.costoTotal }} $</td>
+            <td>{{ reserva.adelanto }} $</td>
             <td>{{ getNombreCliente(reserva.idCliente) }}</td>
             <td>{{ getNombreCancha(reserva.idCanchaDeporte) }}</td>
             <td>{{ reserva.estado }}</td>

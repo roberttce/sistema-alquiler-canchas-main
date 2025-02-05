@@ -23,7 +23,7 @@ interface DeporteDTO {
   providedIn: 'root'
 })
 export class CanchadeporteService {
-  private apiUrl = 'http://back-phaqchas-env.eba-ffug332t.us-east-2.elasticbeanstalk.com/api/canchas-deporte';
+  private apiUrl = 'https://d3frs4kuns9exf.cloudfront.net/api/canchas-deporte';
 
   constructor(private http: HttpClient) { }
 

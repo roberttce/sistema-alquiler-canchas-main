@@ -8,6 +8,7 @@ import { ReservaDTO } from '../../../models/reserva.dto';
 import { ClienteService } from '../../../services/cliente.service';
 import { SidebarComponent } from "../../sidebar/sidebar.component";
 import { CanchasService } from '../../../services/canchas.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inicio',
@@ -104,7 +105,7 @@ export class InicioComponent {
 
   getnombreCliente(idCliente: number): string {
     const cliente = this.clientes.find(c => c.idCliente === idCliente);
-    return cliente ? `${cliente.nombre} ${cliente.apellido}` : 'Desconocido';
+    return cliente ? cliente.nombre : 'Desconocido';
   }
 
   fetchCanchasDeportes() {
@@ -202,6 +203,7 @@ export class InicioComponent {
     };
 
     this.reservasService.crearReserva(nuevaReserva).subscribe(() => {
+      Swal.fire('Éxito', 'Reserva creada correctamente', 'success');
       this.cerrarFormulario();
       this.listarReservas();
     }, error => {

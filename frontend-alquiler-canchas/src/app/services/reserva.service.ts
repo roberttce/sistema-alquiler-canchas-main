@@ -9,7 +9,7 @@ import { ReservaDTO } from '../models/reserva.dto';
 })
 export class ReservasService {
 
-  private apiUrl = 'http://back-phaqchas-env.eba-ffug332t.us-east-2.elasticbeanstalk.com/api/reservas';
+  private apiUrl = 'https://d3frs4kuns9exf.cloudfront.net/api/reservas';
   // private apiUrl = 'http://localhost:5000/api/reservas';
 
   constructor(private http: HttpClient) {}
